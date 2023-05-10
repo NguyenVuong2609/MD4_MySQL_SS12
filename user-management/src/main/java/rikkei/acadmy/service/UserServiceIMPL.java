@@ -15,6 +15,8 @@ public class UserServiceIMPL implements IUserService {
     private static final String SELECT_ALL_USERS = "select * from user";
     private static final String DELETE_USERS_SQL = "delete from user where id = ?;";
     private static final String UPDATE_USERS_SQL = "update user set name = ?,email= ?, country =? where id = ?;";
+    private static final String SORT_BY_USERNAME = "select * from user order by name";
+    private static final String SEARCH_USER_BY_COUNTRY = "select * from user where country = ?";
 
     public UserServiceIMPL() {
     }
@@ -101,7 +103,6 @@ public class UserServiceIMPL implements IUserService {
             printSQLException(e);
         }
         return users;
-
     }
 
     @Override
@@ -125,6 +126,59 @@ public class UserServiceIMPL implements IUserService {
             rowUpdated = statement.executeUpdate() > 0;
         }
         return rowUpdated;
+    }
+
+    @Override
+    public List<User> selectAllUsersOrderByName() {
+        // using try-with-resources to avoid closing resources (boiler plate code)
+        List<User> users = new ArrayList<>();
+        // Step 1: Establishing a Connection
+        try (Connection connection = getConnection();
+
+             // Step 2:Create a statement using connection object
+             PreparedStatement preparedStatement = connection.prepareStatement(SORT_BY_USERNAME);) {
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String country = rs.getString("country");
+                users.add(new User(id, name, email, country));
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return users;
+    }
+
+    @Override
+    public List<User> selectAllUsersByCountry(String ct) {
+        // using try-with-resources to avoid closing resources (boiler plate code)
+        List<User> users = new ArrayList<>();
+        // Step 1: Establishing a Connection
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(SEARCH_USER_BY_COUNTRY);) {
+            statement.setString(1, ct);
+            System.out.println(statement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = statement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String country = rs.getString("country");
+                users.add(new User(id, name, email, country));
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return users;
     }
 
     private void printSQLException(SQLException ex) {

@@ -20,6 +20,10 @@
     </h2>
 </center>
 <div align="center">
+    <form action="/users?action=searchByCountry">
+        <input type="text" name="country">
+        <button type="submit">Search</button>
+    </form>
     <table border="1" cellpadding="5">
         <caption><h2>List of Users</h2></caption>
         <tr>
@@ -28,7 +32,6 @@
             <th>Email</th>
             <th>Country</th>
             <th>Actions</th>
-            <th>Test</th>
         </tr>
         <c:forEach var="user" items="${listUser}">
             <tr>
@@ -43,6 +46,7 @@
             </tr>
         </c:forEach>
     </table>
+    <button><a href="/users?action=sortByName">Sort by Name</a></button>
 </div>
 </body>
 </html>
