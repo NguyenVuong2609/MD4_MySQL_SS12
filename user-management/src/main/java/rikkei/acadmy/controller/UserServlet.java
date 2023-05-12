@@ -26,9 +26,13 @@ public class UserServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         String action = request.getParameter("action");
+//        String country = request.getParameter("country");
         if (action == null) {
             action = "";
         }
+//        if (country != null){
+//            searchUsersByCountry(request,response);
+//        }
 
         try {
             switch (action) {

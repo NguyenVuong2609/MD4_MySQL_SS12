@@ -157,17 +157,14 @@ public class UserServiceIMPL implements IUserService {
 
     @Override
     public List<User> selectAllUsersByCountry(String ct) {
-        // using try-with-resources to avoid closing resources (boiler plate code)
         List<User> users = new ArrayList<>();
-        // Step 1: Establishing a Connection
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(SEARCH_USER_BY_COUNTRY);) {
             statement.setString(1, ct);
             System.out.println(statement);
-            // Step 3: Execute the query or update query
+
             ResultSet rs = statement.executeQuery();
 
-            // Step 4: Process the ResultSet object.
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");

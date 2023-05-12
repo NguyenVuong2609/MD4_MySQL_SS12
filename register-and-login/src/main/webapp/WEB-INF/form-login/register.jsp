@@ -28,13 +28,19 @@
 
                                 <form class="mx-1 mx-md-4" method="post">
                                     <c:if test="${requestScope['validate']!=null}">
-                                        <label class="alert alert-danger">${requestScope['validate']}</label>
+                                        <c:if test="${requestScope['validate']!='Successful'}">
+                                            <label class="alert alert-danger">${requestScope['validate']}</label>
+                                        </c:if>
+                                        <c:if test="${requestScope['validate']=='Successful'}">
+                                            <label class="alert alert-success" style="text-align: center">${requestScope['validate']}</label>
+                                        </c:if>
                                     </c:if>
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label">Your Name</label>
-                                            <input type="text" class="form-control" name="name"/>
+                                            <input type="text" class="form-control" name="name"
+                                                   value="${requestScope['name']}"/>
                                         </div>
                                     </div>
 
@@ -42,23 +48,26 @@
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
                                             <label class="form-label">Your Username</label>
-                                            <input type="text" class="form-control" name="username"/>
+                                            <input type="text" class="form-control" name="username"
+                                                   value="${requestScope['username']}"/>
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" >Your Email</label>
-                                            <input type="email" name="email"  class="form-control"/>
+                                            <label class="form-label">Your Email</label>
+                                            <input type="email" name="email" class="form-control"
+                                                   value="${requestScope['email']}"/>
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" >Password</label>
-                                            <input type="password" name="password" class="form-control"/>
+                                            <label class="form-label">Password</label>
+                                            <input type="password" name="password" class="form-control"
+                                                   value="${requestScope['password']}"/>
                                         </div>
                                     </div>
 

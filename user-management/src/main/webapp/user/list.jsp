@@ -20,7 +20,8 @@
     </h2>
 </center>
 <div align="center">
-    <form action="/users?action=searchByCountry">
+    <form method="get">
+        <input type="text" name="action" value="searchByCountry" hidden>
         <input type="text" name="country">
         <button type="submit">Search</button>
     </form>
